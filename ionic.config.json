@@ -1,0 +1,7 @@
+{
+  "name": "appBrb",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
