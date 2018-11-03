@@ -8,10 +8,40 @@
 </ion-header>
 
 <ion-content padding>
-  <img src="{{foto}}">
+  <ion-card>
+    <div class="list card">
+      <ion-item>
+        Foto coletada
+        <div>
+          <img src="{{foto}}">
+        </div>
+      </ion-item>
+
+      <ion-item>
+        
+      </ion-item>
+    </div>
+
+  </ion-card>
 </ion-content>
 
 <ion-footer padding>
-  <button ion-button large block (click)="tirarFoto();">Câmera</button>
-  <button ion-button large block outline (click)="pegarFoto();">Galeria</button>
+  <ion-card>
+    <div class="list card">
+      <ion-row no-padding>
+        <ion-col>
+          <button ion-button clear small color="primary" icon-left (click)="tirarFoto();">
+            <ion-icon name='camera'></ion-icon>
+            Câmera
+          </button>
+        </ion-col>
+        <ion-col text-center>
+          <button ion-button clear small color="primary" icon-left (click)="pegarFoto();">
+            <ion-icon name='albums'></ion-icon>
+            Galeria
+          </button>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-card>
 </ion-footer>
