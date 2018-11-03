@@ -1,0 +1,36 @@
+<ion-content padding class="primary-font">
+  <h3>Bem Vindo</h3>
+
+  <img src="assets/imgs/tela_inicial.png" alt="logo">
+
+  <form padding [formGroup]="loginForm">
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="email"
+          formControlName="email"
+          placeholder="E-mail"
+          clearInput clearOnEdit="false"
+        >
+        </ion-input>
+      </ion-item>
+
+      <h6 *ngIf="errorEmail" class="error"> {{messageEmail}}</h6>
+
+      <ion-item>
+        <ion-label stacked>Senha</ion-label>
+        <ion-input type="password" [(ngModel)]="password"
+          formControlName="password"
+          placeholder="Senha"
+          clearInput clearOnEdit="false"
+        >
+        </ion-input>
+      </ion-item>
+
+      <h6 *ngIf="errorPassword" class="error"> {{messagePassword}}</h6>
+
+      
+  </form>
+  <button ion-button block (click)="validarLogin();">Entrar</button>
+  <button ion-button block outline (click)="registrar();">Registrar</button>
+
+</ion-content>

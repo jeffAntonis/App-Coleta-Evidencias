@@ -1,37 +1,70 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { Camera, CameraOptions } from "@ionic-native/camera";
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage {
-  selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  foto: string = '';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
-    this.selectedItem = navParams.get('item');
-
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
-
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
-    }
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera) {
+   
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
+  tirarFoto(){
+    this.foto = '';
+
+    const opcoes: CameraOptions = {
+      quality: 100,
+      //DEVOLVE NA BASE 64
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: false,
+      allowEdit: true
+    }
+
+    //PEGANDO A IMAGEM
+    this.camera.getPicture(opcoes)
+      //VALIDANDO AS PROMESSAS
+      .then((imagemData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imagemData;
+        this.foto = base64Image;
+
+      }, (erro) => {
+        console.log(erro);
+      })
+      .catch((erro) => {
+        console.log(erro);
+      });
+  }
+
+  pegarFoto(){
+    this.foto = '';
+
+    const opcoes: CameraOptions = {
+      quality: 100,
+      //DEVOLVE NA BASE 64
+      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      saveToPhotoAlbum: false,
+      allowEdit: true
+    }
+
+    //PEGANDO A IMAGEM
+    this.camera.getPicture(opcoes)
+      //VALIDANDO AS PROMESSAS
+      .then((imagemData) => {
+        let base64Image = 'data:image/jpeg;base64,' + imagemData;
+        this.foto = base64Image;
+
+      }, (erro) => {
+        console.log(erro);
+      })
+      .catch((erro) => {
+        console.log(erro);
+      });
   }
 }
