@@ -12,13 +12,15 @@ import { LoginPage } from '../pages/login/login';
 import { HttpModule } from '../../node_modules/@angular/http';
 
 import { Camera } from "@ionic-native/camera";
+import { ArqPage } from '../pages/arq/arq';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    ArqPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { Camera } from "@ionic-native/camera";
     MyApp,
     HomePage,
     ListPage,
-    LoginPage
+    LoginPage,
+    ArqPage
   ],
   providers: [
     StatusBar,
