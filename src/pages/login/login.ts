@@ -74,7 +74,9 @@ export class LoginPage {
 
         if(retorno[0].indexOf("sucesso") > -1){
           alert('Login Realizado com sucesso!');
-          this.navCtrl.push(HomePage);
+          this.navCtrl.setRoot(HomePage, {
+            retorno
+          });
         } else{
           alert('Erro ao realizar login!');
         }
