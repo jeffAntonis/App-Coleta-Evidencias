@@ -8,9 +8,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'arq.html',
 })
 export class ArqPage {
+  arquivo;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
+  atualizaArquivo(event){
+    this.arquivo = event.srcElement.files[0];
+  }
 
 }
