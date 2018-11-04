@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { Http, Response } from '@angular/http';
 
 import 'rxjs';
@@ -22,7 +22,7 @@ export class LoginPage {
   private url: string = 'https://jefferson-icm1.000webhostapp.com/';
   data: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
     this.data.username = '';
     this.data.response = '';
     
@@ -64,11 +64,17 @@ export class LoginPage {
 
     let { email, password } = this.loginForm.controls;
 
+    let loader = this.loadingCtrl.create({
+      content: 'Carregando...'
+    });
+
+    loader.present();
     
     var myData = JSON.stringify({acao: 'login', dados: [email.value, password.value]});
 
     this.http.post(this.url, myData)
       .subscribe(data => {
+        loader.dismiss();
 
         var retorno = data.json();
 

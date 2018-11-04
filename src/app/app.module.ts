@@ -5,14 +5,18 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+import { ArqPage } from '../pages/arq/arq';
+import { LoginPage } from '../pages/login/login';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { LoginPage } from '../pages/login/login';
 import { HttpModule } from '../../node_modules/@angular/http';
 
 import { Camera } from "@ionic-native/camera";
-import { ArqPage } from '../pages/arq/arq';
+import { FileTransfer } from "@ionic-native/file-transfer";
+import { File } from "@ionic-native/file";
+// import { FilePath } from '@ionic-native/file-path';
+
 
 @NgModule({
   declarations: [
@@ -39,7 +43,10 @@ import { ArqPage } from '../pages/arq/arq';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    Camera
+    Camera,
+    FileTransfer,
+    File,
+    // FilePath
   ]
 })
 export class AppModule {}
