@@ -19,7 +19,7 @@ export class LoginPage {
   errorEmail = false;
   errorPassword = false;
 
-  private url: string = 'https://jefferson-icm1.000webhostapp.com/';
+  private url: string = 'http://localhost/';
   data: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
