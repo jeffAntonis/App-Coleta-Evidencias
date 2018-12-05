@@ -104,7 +104,7 @@ export class ListPage {
       headers: {}
     }
 
-    fileTransfer.upload(this.foto, this.url, opcoes)
+    fileTransfer.upload(this.foto, this.url + "upload.php", opcoes)
       .then((data) => {
         var resultado = JSON.parse(data.response);
 
@@ -124,13 +124,7 @@ export class ListPage {
 
     var myData = JSON.stringify({acao: 'salvarDadosEvidencia', dados: dados});
 
-    //URL CELULAR
-    //var url = 'http://192.168.43.144:80/index.php';
-
-    //INTERNET
-    var url = 'http://192.168.15.8:80/index.php';
-
-    this.http.post(url, myData)
+    this.http.post(this.url + "index.php", myData)
       .subscribe(data => {
         var retorno = data.json();
         console.log(retorno);
@@ -140,8 +134,8 @@ export class ListPage {
         } else{
           this.showToast('Erro ao realizar operação!');
         }
-      });
-    
+      })
+    ;   
   }
 
   showToast(mensagem){
