@@ -1,48 +1,50 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ToastController } from 'ionic-angular';
 import { Http, Response } from '@angular/http';
 
-import 'rxjs';
-import { ListPage } from '../list/list';
 import { HomePage } from '../home/home';
+import { RegisterPage } from '../register/register';
+import * as Constants from '../../services/constants';
 
 @IonicPage()
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
+
+//CLASSE
 export class LoginPage {
   public loginForm: any;
   messageEmail = ""
   messagePassword = "";
-  errorEmail = false;
+  errorMatricula = false;
   errorPassword = false;
-
-  private url: string = 'http://localhost/';
   data: any = {};
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public formBuilder: FormBuilder, public loadingCtrl: LoadingController) {
-    this.data.username = '';
-    this.data.response = '';
-    
-    this.http = http;
+  //URL
+  url = "";
+
+  //CONSTRUTOR
+  constructor(public navCtrl: NavController, public navParams: NavParams, public http: Http, public formBuilder: FormBuilder, 
+    public loadingCtrl: LoadingController, public toastControl: ToastController) {
 
     this.loginForm = formBuilder.group({
-      email: ['', Validators.required],
+      matricula: ['', Validators.required],
       password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
     });
+
+    this.url = Constants.URL;
   }
 
   //VALIDA LOGIN
   validarLogin(){
-    let { email, password } = this.loginForm.controls;
+    let { matricula, password } = this.loginForm.controls;
     
-    if (!this.loginForm.valid) {
-      
-      if (!email.valid) {
-        this.errorEmail = true;
-        this.messageEmail = "Ops! Email inválido";
+    if (!this.loginForm.valid) {      
+      if (!matricula.valid) {
+        this.errorMatricula = true;
+        this.messageEmail = "Ops! Matrícula inválida";
       } else {
         this.messageEmail = "";
       }
@@ -61,8 +63,7 @@ export class LoginPage {
 
   //REALIZA LOGIN
   login(){
-
-    let { email, password } = this.loginForm.controls;
+    let { matricula, password } = this.loginForm.controls;
 
     let loader = this.loadingCtrl.create({
       content: 'Carregando...'
@@ -70,27 +71,34 @@ export class LoginPage {
 
     loader.present();
     
-    var myData = JSON.stringify({acao: 'login', dados: [email.value, password.value]});
+    var myData = JSON.stringify({acao: 'login', dados: [matricula.value, password.value]});
 
-    this.http.post(this.url, myData)
+    this.http.post(this.url + "index.php", myData)
       .subscribe(data => {
         loader.dismiss();
-
         var retorno = data.json();
-
-        if(retorno[0].indexOf("sucesso") > -1){
-          alert('Login Realizado com sucesso!');
+        if(retorno[0].indexOf("Sucesso") > -1){
           this.navCtrl.setRoot(HomePage, {
             retorno
           });
         } else{
-          alert('Erro ao realizar login!');
+          this.showToast('Erro! Verifique a matrícula e a senha digitada!');
         }
-      });
+      })
+    ;
   }
 
+  //REGISTRAR 
   registrar(){
-    alert('aqui');
-    this.navCtrl.push(ListPage);
+    this.navCtrl.setRoot(RegisterPage);
+  }
+
+  //EXIBIR TOAST
+  showToast(mensagem){
+    let toast = this.toastControl.create({
+      message: mensagem,
+      duration: 3000
+    });
+    toast.present();
   }
 }

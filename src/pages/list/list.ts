@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Camera, CameraOptions } from "@ionic-native/camera";
 import { FileTransfer, FileUploadOptions, FileTransferObject } from "@ionic-native/file-transfer";
 import { File } from "@ionic-native/file";
+
+import { Session } from '../../providers/session/session';
+import { Usuario } from '../../models/model/usuario-model';
+import { Http } from '../../../node_modules/@angular/http';
+import * as Constants from '../../services/constants';
 
 @Component({
   selector: 'page-list',
@@ -10,9 +15,21 @@ import { File } from "@ionic-native/file";
 })
 export class ListPage {
   foto: any;
+  usuarioLogado: Usuario;
+  
+  //URL CELULAR
+  url = "";
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public transfer: FileTransfer, public file: File) {
-   
+  constructor(public navCtrl: NavController, public navParams: NavParams, public camera: Camera, public transfer: FileTransfer, 
+    public file: File, public toastControl: ToastController, public session: Session, public http: Http) {
+
+      //PEGANDO OS DADOS DO USUARIO SALVOS NA SESSÃO
+      this.session.get()
+        .then(res => {
+            this.usuarioLogado = new Usuario(res);
+        })
+      ;
+      this.url = Constants.URL;
   }
 
   tirarFoto(){
@@ -87,13 +104,52 @@ export class ListPage {
       headers: {}
     }
 
-    const url = 'https://jefferson-icm1.000webhostapp.com/arquivos/upload.php';
-
-    fileTransfer.upload(this.foto, url, opcoes)
+    fileTransfer.upload(this.foto, this.url, opcoes)
       .then((data) => {
-        console.log(data);
+        var resultado = JSON.parse(data.response);
+
+        if(resultado[0].indexOf("Sucesso") > -1){
+          resultado[1].push(this.usuarioLogado.matricula);
+          
+          this.salvarDadosEvidencia(resultado[1]);
+        } else{
+          this.showToast('Erro ao realizar operação!');
+        }
       }, (erro) => {
         console.log(erro);
       });
+  }
+
+  salvarDadosEvidencia(dados) {
+
+    var myData = JSON.stringify({acao: 'salvarDadosEvidencia', dados: dados});
+
+    //URL CELULAR
+    //var url = 'http://192.168.43.144:80/index.php';
+
+    //INTERNET
+    var url = 'http://192.168.15.8:80/index.php';
+
+    this.http.post(url, myData)
+      .subscribe(data => {
+        var retorno = data.json();
+        console.log(retorno);
+
+        if(retorno.indexOf("Sucesso") > -1){
+          this.showToast('Upload realizado com sucesso!');
+        } else{
+          this.showToast('Erro ao realizar operação!');
+        }
+      });
+    
+  }
+
+  showToast(mensagem){
+    let toast = this.toastControl.create({
+      message: mensagem,
+      duration: 3000
+    });
+
+    toast.present();
   }
 }

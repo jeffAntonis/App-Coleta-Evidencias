@@ -1,0 +1,53 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Registro</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding class="primary-font">
+<form padding [formGroup]="registerForm">
+  <ion-item>
+    <ion-label stacked>Matrícula</ion-label>
+    <ion-input type="text" [(ngModel)]="matricula"
+      formControlName="matricula"
+      placeholder="Matrícula"
+      clearInput clearOnEdit="false"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Nome</ion-label>
+    <ion-input type="text" [(ngModel)]="nome"
+      formControlName="nome"
+      placeholder="Nome"
+      clearInput clearOnEdit="false"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>E-mail</ion-label>
+    <ion-input type="text" [(ngModel)]="email"
+      formControlName="email"
+      placeholder="E-mail"
+      clearInput clearOnEdit="false"
+    >
+    </ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label stacked>Senha</ion-label>
+    <ion-input type="password" [(ngModel)]="password"
+      formControlName="password"
+      placeholder="Senha"
+      clearInput clearOnEdit="false"
+    >
+    </ion-input>
+  </ion-item>
+
+</form>
+<button ion-button block (click)="registrar();">Confirmar</button>
+</ion-content>

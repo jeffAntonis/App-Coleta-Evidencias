@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Evidências Coletadas</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let evidencia of evidenciasColetadas; let i=index;">
+      <ion-label>
+        Nome da Evidência: {{evidencia.NO_EVIDENCIA_ORIGINAL}}
+      </ion-label>
+      <div item-content style="padding-left: 5px;">
+        Data: {{evidencia.DT_REGISTRO}}
+        <button ion-button clear small color="primary" icon-left (click)="getPermission(evidencia, 'excluir')">
+          <ion-icon name='close-circle'></ion-icon>
+        </button>
+        <button ion-button clear small color="primary" icon-left (click)="getPermission(evidencia, 'baixar')">
+          <ion-icon name='cloud-download'></ion-icon>
+        </button>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>

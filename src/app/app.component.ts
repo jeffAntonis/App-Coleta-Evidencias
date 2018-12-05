@@ -3,10 +3,10 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ArqPage } from '../pages/arq/arq';
+import { ListaEvidenciasPage } from '../pages/lista-evidencias/lista-evidencias';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,7 +25,8 @@ export class MyApp {
     this.pages = [
       // { title: 'Home', component: HomePage },
       { title: 'Fotos', component: ListPage },
-      { title: 'Outros', component: ArqPage }
+      { title: 'Outros', component: ArqPage },
+      { title: 'Evidências Coletadas', component: ListaEvidenciasPage }
     ];
 
   }
@@ -40,8 +41,6 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.push(page.component);
   }
 }
