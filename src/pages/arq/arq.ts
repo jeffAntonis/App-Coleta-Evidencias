@@ -72,7 +72,7 @@ export class ArqPage {
     }
 
     //REALIZANDO UPLOAD
-    fileTransfer.upload(this.arquivo, this.url, opcoes)
+    fileTransfer.upload(this.arquivo, this.url + "upload.php", opcoes)
       .then((data) => {
         var resultado = JSON.parse(data.response);
 

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -7,6 +7,7 @@ import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ArqPage } from '../pages/arq/arq';
 import { ListaEvidenciasPage } from '../pages/lista-evidencias/lista-evidencias';
+import { Session } from '../providers/session/session';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +19,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public session: Session) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -42,5 +43,10 @@ export class MyApp {
 
   openPage(page) {
     this.nav.push(page.component);
+  }
+
+  sair(){
+    this.session.remove();
+    this.nav.setRoot(LoginPage);
   }
 }

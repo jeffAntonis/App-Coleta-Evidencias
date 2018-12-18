@@ -36,11 +36,12 @@ export class ListPage {
     this.foto = '';
 
     const opcoes: CameraOptions = {
-      quality: 100,
+      quality: 85,
       //DEVOLVE NA BASE 64
       destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      // encodingType: this.camera.EncodingType.JPEG,
+      // mediaType: this.camera.MediaType.PICTURE,
       saveToPhotoAlbum: false,
       allowEdit: true
     }
@@ -51,7 +52,6 @@ export class ListPage {
       .then((imagemData) => {
         let base64Image = 'data:image/jpeg;base64,' + imagemData;
         this.foto = base64Image;
-
       }, (erro) => {
         console.log(erro);
       })
@@ -64,7 +64,7 @@ export class ListPage {
     this.foto = '';
 
     const opcoes: CameraOptions = {
-      quality: 100,
+      quality: 85,
       //DEVOLVE NA BASE 64
       destinationType: this.camera.DestinationType.DATA_URL,
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
@@ -78,7 +78,6 @@ export class ListPage {
       .then((imagemData) => {
         let base64Image = 'data:image/jpeg;base64,' + imagemData;
         this.foto = base64Image;
-
       }, (erro) => {
         console.log(erro);
       })
@@ -100,12 +99,12 @@ export class ListPage {
       fileName: "imagem_" + random + ".jpg",
       chunkedMode: false,
       httpMethod: 'post',
-      mimeType: "image/jpeg",
       headers: {}
     }
 
     fileTransfer.upload(this.foto, this.url + "upload.php", opcoes)
       .then((data) => {
+        console.log(data);
         var resultado = JSON.parse(data.response);
 
         if(resultado[0].indexOf("Sucesso") > -1){
