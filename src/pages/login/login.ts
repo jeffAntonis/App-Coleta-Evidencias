@@ -90,7 +90,7 @@ export class LoginPage {
 
   //REGISTRAR 
   registrar(){
-    this.navCtrl.setRoot(RegisterPage);
+    this.navCtrl.push(RegisterPage);
   }
 
   //EXIBIR TOAST
